@@ -100,6 +100,7 @@ import {
   buildOpenCodeByokProviderConfig,
 } from './runtimes/byok-opencode.js';
 import { shouldUseOpenCodePureFlag } from './runtimes/opencode-permissions.js';
+import { ensureDetectedRuntimeCapabilities } from './runtimes/detection.js';
 
 export { validateBaseUrl } from '@open-design/contracts/api/connectionTest';
 
@@ -2582,6 +2583,7 @@ async function testAgentConnectionInternal(
     }
     let args: string[];
     try {
+      await ensureDetectedRuntimeCapabilities(input.agentId, configuredAgentEnv);
       promptFile = await preparePromptFileForAgent(def, SMOKE_PROMPT, 'connection-test');
       args = def.buildArgs(
         SMOKE_PROMPT,
